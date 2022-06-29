@@ -1,5 +1,5 @@
 /* Magic Mirror
- * Node Helper: MMM-jitsi
+ * Node Helper: MMM-contacts
  *
  * By Olof Enström
  * 
