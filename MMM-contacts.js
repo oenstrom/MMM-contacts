@@ -19,29 +19,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+
 Module.register("MMM-contacts", {
   requiresVersion: "2.1.0", // Required version of MagicMirror
 
-  defaults: {
-  },
+  // defaults: {
+  // },
 
-  getScripts: function () {
-    return [];
-  },
+  // getScripts: function () {
+  //   return [];
+  // },
 
-  getStyles: function() {
-    return [];
-  },
+  // getStyles: function() {
+  //   return [];
+  // },
 
   start: function () {
     var self = this;
+    this.contacts = [];
     self.sendSocketNotification("INIT", {}); // Here we can pass config to the node_helper if needed.
-  },
-
-  getDom: function () {
-    var self = this;
-    this.wrapper = document.createElement("div");
-    return this.wrapper;
   },
 
   notificationReceived: function (notification, payload, sender) {
@@ -58,8 +54,12 @@ Module.register("MMM-contacts", {
 
   // socketNotificationReceived from node_helper
   socketNotificationReceived: function (notification, payload) {
-    if (notification === "MMM-contacts-LIST") {
-      // Get all contacts
+    if (notification === "MMM-contacts-LIST-ALL") {
+      // TODO: Fix req body json
+      console.log("MMM-contacts-LIST-ALL NOTIFICATION");
+      console.log(payload);
+      this.contacts = payload.contacts;
+      this.updateDom(0);
     } else if (notification === "MMM-contacts-GET") {
       // Get a single contact
     } else if (notification === "MMM-contacts-ADD") {
@@ -67,5 +67,22 @@ Module.register("MMM-contacts", {
     } else if (notification === "MMM-contacts-DELETE") {
       // Delete a user
     }
+  },
+
+  getDom: function () {
+    var self = this;
+    let wrapper = document.createElement("div");
+    let ul = document.createElement("ul");
+    if (this.contacts.length > 0) {
+      this.contacts.forEach((item) => {
+        const li = document.createElement("li");
+        li.innerText = item.name;
+        ul.appendChild(li);
+      });
+      wrapper.appendChild(ul);
+    } else {
+      wrapper.innerHTML = "No contacts...";
+    }
+    return wrapper;
   },
 });

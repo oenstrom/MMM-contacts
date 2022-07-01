@@ -24,21 +24,25 @@ module.exports = NodeHelper.create({
   start: function() {
     var self = this;
     
-    this.expressApp.get("/MMM-contacts/list", function(req, res) {
-      res.status(200).json({"contacts": []});
-    });
-
-    this.expressApp.post("/MMM-contacts/add", function(req, res) {
+    this.expressApp.post("/MMM-contacts/list", function(req, res) {
+      // TODO: Fix req body json
+      console.log("POST TO /MMM-contacts/list");
+      console.log(req);
+      self.sendSocketNotification("MMM-contacts-LIST-ALL", {contacts: req.body.contacts})
       res.status(200).json({"success": true});
     });
 
-    this.expressApp.get("/MMM-contacts/get", function(req, res) {
-      res.status(200).json({"contact": {}});
-    });
+    // this.expressApp.post("/MMM-contacts/add", function(req, res) {
+    //   res.status(200).json({"success": true});
+    // });
 
-    this.expressApp.delete("/MMM-contacts/delete", function(req, res) {
-      res.status(200).json({"success": true});
-    });
+    // this.expressApp.get("/MMM-contacts/get", function(req, res) {
+    //   res.status(200).json({"contact": {}});
+    // });
+
+    // this.expressApp.delete("/MMM-contacts/delete", function(req, res) {
+    //   res.status(200).json({"success": true});
+    // });
   },
 
   // Override socketNotificationReceived method.
@@ -52,6 +56,7 @@ module.exports = NodeHelper.create({
   socketNotificationReceived: function(notification, payload) {
     if (notification === "INIT") {
       // self.config.apiKey = payload
+      console.log("INIT NOTIFICATION!");
     }
   },
 
