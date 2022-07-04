@@ -34,6 +34,13 @@ Module.register("MMM-contacts", {
   //   return [];
   // },
 
+  getTranslations: function() {
+    return {
+      en: "translations/en.json",
+      sv: "translations/sv.json"
+    };
+  },
+
   start: function () {
     var self = this;
     this.contacts = [];
@@ -55,9 +62,6 @@ Module.register("MMM-contacts", {
   // socketNotificationReceived from node_helper
   socketNotificationReceived: function (notification, payload) {
     if (notification === "MMM-contacts-LIST-ALL") {
-      // TODO: Fix req body json
-      // console.log("MMM-contacts-LIST-ALL NOTIFICATION");
-      console.log(payload);
       this.contacts = payload.contacts;
       this.updateDom(0);
     } else if (notification === "MMM-contacts-GET") {
@@ -89,7 +93,7 @@ Module.register("MMM-contacts", {
       });
       wrapper.appendChild(table);
     } else {
-      wrapper.innerHTML = "No contacts...";
+      wrapper.innerHTML = self.translate("NO_CONTACTS");
     }
     return wrapper;
   },
