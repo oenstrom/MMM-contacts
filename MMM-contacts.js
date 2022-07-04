@@ -56,7 +56,7 @@ Module.register("MMM-contacts", {
   socketNotificationReceived: function (notification, payload) {
     if (notification === "MMM-contacts-LIST-ALL") {
       // TODO: Fix req body json
-      console.log("MMM-contacts-LIST-ALL NOTIFICATION");
+      // console.log("MMM-contacts-LIST-ALL NOTIFICATION");
       console.log(payload);
       this.contacts = payload.contacts;
       this.updateDom(0);
@@ -72,14 +72,22 @@ Module.register("MMM-contacts", {
   getDom: function () {
     var self = this;
     let wrapper = document.createElement("div");
-    let ul = document.createElement("ul");
+    let table = document.createElement("table");
     if (this.contacts.length > 0) {
       this.contacts.forEach((item) => {
-        const li = document.createElement("li");
-        li.innerText = item.name;
-        ul.appendChild(li);
+        const tr    = document.createElement("tr");
+        const name  = document.createElement("td")
+        // const email = document.createElement("td")
+        const phone = document.createElement("td")
+        name.innerText  = item[0];
+        // email.innerText = item[1];
+        phone.innerText = item[2];
+        tr.appendChild(name);
+        // tr.appendChild(email);
+        tr.appendChild(phone);
+        table.appendChild(tr);
       });
-      wrapper.appendChild(ul);
+      wrapper.appendChild(table);
     } else {
       wrapper.innerHTML = "No contacts...";
     }
