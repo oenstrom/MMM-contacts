@@ -26,6 +26,7 @@ module.exports = NodeHelper.create({
     
     this.expressApp.post("/MMM-contacts/list", function(req, res) {
       // TODO: Fix req body json
+      console.log(req);
       self.sendSocketNotification("MMM-contacts-LIST-ALL", {contacts: req.body.contacts})
       res.status(200).json({"success": true});
     });

@@ -48,8 +48,9 @@ Module.register("MMM-contacts", {
   },
 
   notificationReceived: function (notification, payload, sender) {
-    if (notification === "MMM-contacts-LIST") {
-      // Get all contacts
+    if (notification === "MMM_DISPLAY_CONTACTS") {
+      this.contacts = payload.contacts;
+      this.updateDom(0);
     } else if (notification === "MMM-contacts-GET") {
       // Get a single contact
     } else if (notification === "MMM-contacts-ADD") {
