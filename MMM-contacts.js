@@ -47,22 +47,9 @@ Module.register("MMM-contacts", {
     self.sendSocketNotification("INIT", {}); // Here we can pass config to the node_helper if needed.
   },
 
-  notificationReceived: function (notification, payload, sender) {
-    if (notification === "MMM_DISPLAY_CONTACTS") {
-      this.contacts = payload.contacts;
-      this.updateDom(0);
-    } else if (notification === "MMM-contacts-GET") {
-      // Get a single contact
-    } else if (notification === "MMM-contacts-ADD") {
-      // Add a user
-    } else if (notification === "MMM-contacts-DELETE") {
-      // Delete a user
-    }
-  },
-
   // socketNotificationReceived from node_helper
   socketNotificationReceived: function (notification, payload) {
-    if (notification === "MMM-contacts-LIST-ALL") {
+    if (notification === "LIST-ALL") {
       this.contacts = payload.contacts;
       this.updateDom(0);
     } else if (notification === "MMM-contacts-GET") {
