@@ -1,3 +1,6 @@
 {
-  "NO_CONTACTS": "No contacts..."
+  "NO_CONTACTS": "No contacts...",
+  "CALL": "Call",
+  "DELETE": "Delete",
+  "BACK": "Back"
 }

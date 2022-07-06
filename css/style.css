@@ -1,0 +1,29 @@
+.module.MMM-contacts .wrapper {
+  text-align: center;
+  overflow-x: auto;
+}
+.module.MMM-contacts button {
+  appearance: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: var(--font-primary), sans-serif;
+  border: none;
+}
+.module.MMM-contacts .button-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+}
+.module.MMM-contacts button.call {
+  background-color: #00701a;
+  color: #fff;
+}
+.module.MMM-contacts button.cancel {
+  background-color: #005cb2;
+  color: #fff;
+}
+.module.MMM-contacts button.delete {
+  background-color: #ab000d;
+  color: #fff;
+}

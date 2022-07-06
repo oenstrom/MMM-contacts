@@ -30,10 +30,6 @@ Module.register("MMM-contacts", {
   //   return [];
   // },
 
-  // getStyles: function() {
-  //   return [];
-  // },
-
   getTranslations: function() {
     return {
       en: "translations/en.json",
@@ -64,19 +60,47 @@ Module.register("MMM-contacts", {
   getDom: function () {
     var self = this;
     let wrapper = document.createElement("div");
-    let table = document.createElement("table");
-    if (this.contacts.length > 0) {
+    wrapper.style.width = "320px";
+    if (self.contactToDelete) {
+      wrapper.className = "wrapper";
+
+      let pName  = document.createElement("p");
+      let pEmail = document.createElement("p");
+      let pPhone = document.createElement("p");
+      pName.innerText  = self.contactToDelete[0];
+      pEmail.innerText = self.contactToDelete[1];
+      pPhone.innerText = self.contactToDelete[2];
+      self.contactToDelete = undefined;
+
+      let buttonWrapper = document.createElement("div");
+      buttonWrapper.className = "button-wrapper";
+      let callBtn = document.createElement("button");
+      callBtn.textContent = self.translate("CALL");
+      callBtn.className = "call";
+
+      let cancelBtn = document.createElement("button");
+      cancelBtn.textContent = self.translate("BACK");
+      cancelBtn.className = "cancel";
+      cancelBtn.addEventListener("pointerup", () => self.updateDom(300));
+
+      let deleteBtn = document.createElement("button");
+      deleteBtn.textContent = self.translate("DELETE");
+      deleteBtn.className = "delete";
+
+      buttonWrapper.append(callBtn, cancelBtn, deleteBtn);
+      wrapper.append(pName, pEmail, pPhone, buttonWrapper);
+    } else if (this.contacts.length > 0) {
+      let table = document.createElement("table");
       this.contacts.forEach((item) => {
         const tr    = document.createElement("tr");
-        const name  = document.createElement("td")
-        // const email = document.createElement("td")
-        const phone = document.createElement("td")
+        tr.addEventListener("pointerup", () => {self.contactToDelete = item; self.updateDom(300);});
+        const name  = document.createElement("td");
+        // const email = document.createElement("td");
+        const phone = document.createElement("td");
         name.innerText  = item[0];
         // email.innerText = item[1];
         phone.innerText = item[2];
-        tr.appendChild(name);
-        // tr.appendChild(email);
-        tr.appendChild(phone);
+        tr.append(name, phone);
         table.appendChild(tr);
       });
       wrapper.appendChild(table);
@@ -84,5 +108,9 @@ Module.register("MMM-contacts", {
       wrapper.innerHTML = self.translate("NO_CONTACTS");
     }
     return wrapper;
+  },
+
+  getStyles: function() {
+    return [this.file("css/style.css")];
   },
 });
