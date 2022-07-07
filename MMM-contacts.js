@@ -46,6 +46,7 @@ Module.register("MMM-contacts", {
   // socketNotificationReceived from node_helper
   socketNotificationReceived: function (notification, payload) {
     if (notification === "LIST-ALL") {
+      this.selectedContact = undefined;
       this.contacts = payload.contacts;
       this.updateDom(0);
     } else if (notification === "MMM-contacts-GET") {
@@ -61,39 +62,44 @@ Module.register("MMM-contacts", {
     var self = this;
     let wrapper = document.createElement("div");
     wrapper.style.width = "320px";
-    if (self.contactToDelete) {
+    if (self.selectedContact) {
       wrapper.className = "wrapper";
 
       let pName  = document.createElement("p");
       let pEmail = document.createElement("p");
       let pPhone = document.createElement("p");
-      pName.innerText  = self.contactToDelete[0];
-      pEmail.innerText = self.contactToDelete[1];
-      pPhone.innerText = self.contactToDelete[2];
-      self.contactToDelete = undefined;
-
+      pName.innerText  = self.selectedContact[0];
+      pEmail.innerText = self.selectedContact[1];
+      pPhone.innerText = self.selectedContact[2];
+      
       let buttonWrapper = document.createElement("div");
       buttonWrapper.className = "button-wrapper";
       let callBtn = document.createElement("button");
       callBtn.textContent = self.translate("CALL");
       callBtn.className = "call";
-
+      
       let cancelBtn = document.createElement("button");
       cancelBtn.textContent = self.translate("BACK");
       cancelBtn.className = "cancel";
-      cancelBtn.addEventListener("pointerup", () => self.updateDom(300));
-
+      cancelBtn.addEventListener("pointerup", () => {self.selectedContact = undefined; self.updateDom(300)});
+      
       let deleteBtn = document.createElement("button");
       deleteBtn.textContent = self.translate("DELETE");
       deleteBtn.className = "delete";
-
+      deleteBtn.addEventListener("pointerup", () => {
+        self.sendNotification("MYCROFT_COMMAND", {
+          eventName: "contacts-skill:delete_contact",
+          data: {name: self.selectedContact[0], email: self.selectedContact[1], phone: self.selectedContact[2]}
+        });
+      });
+      
       buttonWrapper.append(callBtn, cancelBtn, deleteBtn);
       wrapper.append(pName, pEmail, pPhone, buttonWrapper);
     } else if (this.contacts.length > 0) {
       let table = document.createElement("table");
       this.contacts.forEach((item) => {
         const tr    = document.createElement("tr");
-        tr.addEventListener("pointerup", () => {self.contactToDelete = item; self.updateDom(300);});
+        tr.addEventListener("pointerup", () => {self.selectedContact = item; self.updateDom(300);});
         const name  = document.createElement("td");
         // const email = document.createElement("td");
         const phone = document.createElement("td");
