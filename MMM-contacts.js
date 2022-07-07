@@ -96,6 +96,7 @@ Module.register("MMM-contacts", {
       buttonWrapper.append(callBtn, cancelBtn, deleteBtn);
       wrapper.append(pName, pEmail, pPhone, buttonWrapper);
     } else if (this.contacts.length > 0) {
+      wrapper.className = "wrapper-table";
       let table = document.createElement("table");
       this.contacts.forEach((item) => {
         const tr    = document.createElement("tr");
