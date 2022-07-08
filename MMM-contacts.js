@@ -58,6 +58,13 @@ Module.register("MMM-contacts", {
     }
   },
 
+  notificationReceived: function(notification, payload, sender) {
+    const self = this;
+    if (notification === "MYCROFT_CONNECTED") {
+      self.sendNotification("MYCROFT_COMMAND", {eventName: "contacts-skill:get_contacts", data: {sender: self.name}});
+    }
+  },
+
   getDom: function () {
     var self = this;
     let wrapper = document.createElement("div");
