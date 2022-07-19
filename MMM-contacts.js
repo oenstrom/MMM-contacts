@@ -84,8 +84,12 @@ Module.register("MMM-contacts", {
       let callBtn = document.createElement("button");
       callBtn.textContent = self.translate("CALL");
       callBtn.className = "call";
-      callBtn.addEventListener("pointerup", () =>
-        self.sendNotification("JITSI_CALL", {name: self.selectedContact[0], email: self.selectedContact[1], phone: self.selectedContact[2]}));
+      callBtn.addEventListener("pointerup", () => {
+        self.sendNotification("MYCROFT_COMMAND", {
+          eventName: "jitsi-magicmirror-skill:call",
+          data: {name: self.selectedContact[0], email: self.selectedContact[1], phone: self.selectedContact[2]}
+        });
+      });
       
       let cancelBtn = document.createElement("button");
       cancelBtn.textContent = self.translate("BACK");
