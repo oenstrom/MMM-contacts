@@ -108,6 +108,7 @@ Module.register("MMM-contacts", {
       
       buttonWrapper.append(callBtn, cancelBtn, deleteBtn);
       wrapper.append(pName, pEmail, pPhone, buttonWrapper);
+      setTimeout(() => {self.selectedContact = undefined; self.updateDom(300)}, 10000);
     } else if (this.contacts.length > 0) {
       wrapper.className = "wrapper-table";
       let table = document.createElement("table");
