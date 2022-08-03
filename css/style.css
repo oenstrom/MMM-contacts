@@ -29,10 +29,9 @@
 }
 
 .module.MMM-contacts .wrapper-table {
-  -webkit-mask-image: linear-gradient(to bottom, transparent 5%, #fff 15% 85%, transparent 95%);
-  mask-image: linear-gradient(to bottom, transparent 5%, #fff 15% 85%, transparent 95%);
-  height: 225px;
-  padding-top: 15px;
+  /* -webkit-mask-image: linear-gradient(to bottom, transparent 5%, #fff 15% 85%, transparent 95%);
+  mask-image: linear-gradient(to bottom, transparent 5%, #fff 15% 85%, transparent 95%); */
+  max-height: 225px;
   padding-bottom: 15px;
   overflow-y: auto;
 }
