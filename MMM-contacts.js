@@ -23,13 +23,6 @@
 Module.register("MMM-contacts", {
   requiresVersion: "2.1.0", // Required version of MagicMirror
 
-  // defaults: {
-  // },
-
-  // getScripts: function () {
-  //   return [];
-  // },
-
   getTranslations: function() {
     return {
       en: "translations/en.json",
@@ -38,26 +31,32 @@ Module.register("MMM-contacts", {
   },
 
   start: function () {
-    var self = this;
+    const self = this;
     this.contacts = [];
     self.sendSocketNotification("INIT", {}); // Here we can pass config to the node_helper if needed.
   },
 
-  // socketNotificationReceived from node_helper
+  /**
+   * A socket notification is received.
+   *
+   * @param {string} notification The notification name 
+   * @param {*} payload The data sent
+   */
   socketNotificationReceived: function (notification, payload) {
     if (notification === "LIST-ALL") {
       this.selectedContact = undefined;
       this.contacts = payload.contacts;
       this.updateDom(0);
-    } else if (notification === "MMM-contacts-GET") {
-      // Get a single contact
-    } else if (notification === "MMM-contacts-ADD") {
-      // Add a user
-    } else if (notification === "MMM-contacts-DELETE") {
-      // Delete a user
     }
   },
 
+  /**
+   * Notification recevied from some other module.
+   *
+   * @param {string} notification The notification identifier.
+   * @param {*} payload The sent payload
+   * @param {Module} sender The sender
+   */
   notificationReceived: function(notification, payload, sender) {
     const self = this;
     if (notification === "MYCROFT_CONNECTED") {
@@ -65,6 +64,11 @@ Module.register("MMM-contacts", {
     }
   },
 
+  /**
+   * Get the modules content.
+   *
+   * @returns An element containing this modules content.
+   */
   getDom: function () {
     var self = this;
     let wrapper = document.createElement("div");
